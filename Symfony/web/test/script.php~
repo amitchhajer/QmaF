@@ -1,0 +1,12 @@
+<?php
+require_once('pheanstalk/pheanstalk_init.php');
+$pheanstalk = new Pheanstalk_ClassLoader('127.0.0.1:11300');
+
+for($i=0; $i<1000; $i++) {
+  $job = new stdClass();
+  $job->envelope_id = rand();
+  $job->date = date('Y-m-d H:i:s');
+  $job_data = json_encode($job);
+  $pheanstalk->useTube('test')->put($job_data);
+  echo "pushed: " . $job_data . "\n";
+}

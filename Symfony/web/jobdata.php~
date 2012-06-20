@@ -1,0 +1,25 @@
+<html>
+<body>
+<?php
+
+namespace Acme\DemoBundle\Controller;
+
+require_once('../app/bootstrap.php.cache');
+require_once('../app/autoload.php');
+
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class HomeController extends Controller {
+
+    public function indexAction() {
+        $pheanstalk = $this->get("leezy.pheanstalk");
+
+                $tubes = $pheanstalk->listTubes();
+
+       foreach ($tubes as $tube) {
+            ?><p><?php$output->writeln($tube);?></p><?php
+    }
+
+}
+?>
